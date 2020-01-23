@@ -65,7 +65,7 @@
 					],
 					'pubTime':1579766216,
 					'text':'丢失了一张校园卡',
-					'keyWords':['天山堂','校园卡'],
+					'keyWords':['天山堂','校园卡'],//tags
 					'type':0
 				},
 				Fixtime:'',

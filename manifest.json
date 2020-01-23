@@ -55,7 +55,12 @@
         }
     },
     "h5" : {
-        "title" : "ColorUi for UniApp",
-        "domain" : "demo.color-ui.com"
+        "title" : "兰州大学萃英在线失物招领",
+        "domain" : "demo.color-ui.com",
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : true
+            }
+        }
     }
 }

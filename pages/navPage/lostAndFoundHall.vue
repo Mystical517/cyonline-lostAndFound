@@ -34,7 +34,8 @@
 		<view class="title"><view class="text-white">人人为我，我为人人</view></view>
 		
 		<!-- 页面主体 -->
-		<view class="cu-item" v-for="lostItem in dataOfLost" :key="lostItem.id" :data-id="lostItem.id" @tap="ItemSelected(lostItem.id)">
+		<view class="cu-item" v-for="lostItem in dataOfLost" :key="lostItem.id" :data-id="lostItem.id" @tap="ItemSelected(lostItem.id)" 
+		v-if="TabCur==0||lostItem.keyWords.includes(TabNameList[TabCur])">
 			<view class="cu-card article" :class="'no-card'" >
 				<view class="cu-item shadow">
 					<view class="title">
@@ -96,19 +97,19 @@
 						{
 							'id':2,
 							'pubId':0,
-							'title':'校园卡招领',
+							'title':'水杯招领',
 							'imgSrc':'',
-							'text':'丢失了一张校园卡',
-							'keyWords':['贺兰堂','校园卡'],
+							'text':'捡到一个水杯',
+							'keyWords':['贺兰堂','水杯'],
 							'type':1
 						},
 						{
 							'id':3,
 							'pubId':0,
-							'title':'校园卡招领',
+							'title':'雨伞',
 							'imgSrc':'',
-							'text':'丢失了一张校园卡',
-							'keyWords':['芝兰园','校园卡'],
+							'text':'捡到一把雨伞',
+							'keyWords':['芝兰园','雨伞'],
 							'type':0
 						},
 						{
@@ -122,12 +123,14 @@
 						}
 				],
 				TabCur: 0,
+				TabNameList:['全部','校园卡','水杯','雨伞']
 				
 			}
 		},
 		methods: {
 			NavChange: function(e) {
 				this.PageCur = e.currentTarget.dataset.cur
+				
 			},
 			ItemSelected(id){
 				uni.navigateTo({
