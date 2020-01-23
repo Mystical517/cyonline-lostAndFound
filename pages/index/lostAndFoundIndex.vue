@@ -94,11 +94,18 @@
 						}
 				],
 				PageCur: 'index',
-				TabCur: 0,
 				modalName: null,
 			}
 		},
+		created() {
+			this.getUserInfo();//获取用户信息
+		},
 		methods: {
+			getUserInfo(){
+				//获取用户信息
+				//储存在localstorage中，方便后面调用
+			}
+			,
 			NavChange: function(e) {
 				this.PageCur = e.currentTarget.dataset.cur
 			},

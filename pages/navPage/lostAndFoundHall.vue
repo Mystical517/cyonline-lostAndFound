@@ -1,5 +1,6 @@
 <template name="Hall">
-	<view>
+	<view @touchstart="start" @touchend="end" class="bg-white">
+		
 		<!-- 顶部搜索框 -->
 		<scroll-view scroll-x class="bg-white nav" style="position:fixed;top:0;z-index: 5;" >
 			<view class="cu-bar search bg-white">
@@ -12,26 +13,21 @@
 				</view>
 			</view>
 			<view class="flex text-center">
-				<view class="cu-item flex-sub" :class="0==TabCur?'text-orange cur':''" @tap="tabSelect" data-id="0">
-					<text class="cuIcon-all"></text> 全部
-				</view>
-				<view class="cu-item flex-sub" :class="1==TabCur?'text-orange cur':''" @tap="tabSelect" data-id="1">
-					<text class="cuIcon-vipcard"></text> 校园卡
-				</view>
-				<view class="cu-item flex-sub" :class="2==TabCur?'text-orange cur':''" @tap="tabSelect" data-id="2">
-					<text class="cuIcon-baby"></text> 水杯
-				</view>
-				<view class="cu-item flex-sub" :class="3==TabCur?'text-orange cur':''" @tap="tabSelect" data-id="3">
-					<text class="cuIcon-magic"></text> 雨伞
+				<view v-for="(i,index) in TabList" class="cu-item flex-sub" :class="index==TabCur?'text-orange cur':''" @tap="tabSelect" :data-id="index">
+					<text :class="i.icon"></text> {{i.name}}
 				</view>
 			</view>
 		</scroll-view>
+		
+		
 		<!-- 占位菜单 -->
 		<view class="title"><view class="text-white">兰州大学萃英在线出品</view></view>
 		<view class="title"><view class="text-white">CopyRight@兰州大学萃英在线网络技术部</view></view>
 		<view class="title"><view class="text-white">前端@陈家麟;后端@卢灏</view></view>
 		<view class="title"><view class="text-white">失物招领微信小程序</view></view>
 		<view class="title"><view class="text-white">人人为我，我为人人</view></view>
+		
+		
 		
 		<!-- 页面主体 -->
 		<view class="cu-item" v-for="lostItem in dataOfLost" :key="lostItem.id" :data-id="lostItem.id" @tap="ItemSelected(lostItem.id)" 
@@ -56,16 +52,6 @@
 				</view>
 			</view>
 		</view>
-
-		<!-- 悬浮发布按钮 -->
-<!-- 		<view v-if="modalName==null">
-			<button class="cu-btn cuIcon bg-orange " @tap="showModal" data-target="bottomModal" style="font-size: larger; width: 3rem;height: 3rem;position: fixed;bottom: 3.5rem;right: 0.8rem;z-index: 9999;">
-				<text class="cuIcon-add"></text>
-			</button>
-		</view>
-		 -->
-
-		
 	
 	</view>
 </template>
@@ -123,11 +109,42 @@
 						}
 				],
 				TabCur: 0,
-				TabNameList:['全部','校园卡','水杯','雨伞']
-				
+				TabList:[
+					{'name':'全部','icon':'cuIcon-all'},
+					{'name':'校园卡','icon':'cuIcon-vipcard'},
+					{'name':'水杯','icon':'cuIcon-baby'},
+					{'name':'雨伞','icon':'cuIcon-magic'}
+				],
+				TabNameList:['全部','校园卡','水杯','雨伞'],//第一个元素必须是全部，不然得修改上述判断js
+				startData:{
+					clientX:0,
+					clientY:0
+				}
 			}
 		},
 		methods: {
+			start(e){
+			    this.startData.clientX=e.changedTouches[0].clientX;
+			    this.startData.clientY=e.changedTouches[0].clientY;
+			},
+			end(e){
+			    // console.log(e)
+			    const subX=e.changedTouches[0].clientX-this.startData.clientX;
+			    const subY=e.changedTouches[0].clientY - this.startData.clientY;
+			    if(subY>50 || subY<-50){
+			        // console.log('上下滑')
+			    }else{
+			        if(subX>100){
+			            // console.log('右滑')
+						this.TabCur=(this.TabCur+3) % this.TabNameList.length;
+			        }else if(subX<-100){
+			            // console.log('左滑')
+						this.TabCur=(this.TabCur+1) % this.TabNameList.length;
+			        }else{
+			            console.log('无效')
+			        }
+			    }
+			},
 			NavChange: function(e) {
 				this.PageCur = e.currentTarget.dataset.cur
 				
