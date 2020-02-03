@@ -1,0 +1,26 @@
+{
+  "pages": [
+    "pages/index/lostAndFoundIndex",
+    "pages/detailPages/detailItem",
+    "pages/detailPages/pubLostAndFound"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#0081ff",
+    "navigationBarTitleText": "ColorUi for UniApp",
+    "navigationStyle": "custom",
+    "navigationBarTextStyle": "white"
+  },
+  "nvueCompiler": "uni-app",
+  "renderer": "auto",
+  "splashscreen": {
+    "alwaysShowBeforeRender": true,
+    "autoclose": false
+  },
+  "appname": "lostAndFound_userInterface",
+  "compilerVersion": "2.5.1",
+  "usingComponents": {
+    "cu-custom": "/colorui/components/cu-custom",
+    "my": "/pages/navPage/my",
+    "index": "/pages/navPage/lostAndFoundHall"
+  }
+}

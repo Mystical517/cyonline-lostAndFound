@@ -43,56 +43,13 @@
 </template>
 
 <script>
+	import axios from "axios";
+	import qs from 'qs';
 	export default {
+		// name:'index',
 		data() {
 		return {
-				dataOfLost:[
-						{
-							'id':0,
-							'pubId':0,
-							'title':'校园卡招领',
-							'imgSrc':'',
-							'text':'丢失了一张校园卡',
-							'keyWords':['天山堂','校园卡'],
-							'type':0
-						},
-						{
-							'id':1,
-							'pubId':0,
-							'title':'校园卡招领',
-							'imgSrc':'',
-							'text':'丢失了一张校园卡',
-							'keyWords':['昆仑堂','校园卡'],
-							'type':1
-						},
-						{
-							'id':2,
-							'pubId':0,
-							'title':'校园卡招领',
-							'imgSrc':'',
-							'text':'丢失了一张校园卡',
-							'keyWords':['贺兰堂','校园卡'],
-							'type':1
-						},
-						{
-							'id':3,
-							'pubId':0,
-							'title':'校园卡招领',
-							'imgSrc':'',
-							'text':'丢失了一张校园卡',
-							'keyWords':['芝兰园','校园卡'],
-							'type':0
-						},
-						{
-							'id':4,
-							'pubId':0,
-							'title':'校园卡招领',
-							'imgSrc':'',
-							'text':'丢失了一张校园卡',
-							'keyWords':['玉树','校园卡'],
-							'type':1
-						}
-				],
+				dataOfLost:[],
 				PageCur: 'index',
 				modalName: null,
 			}
@@ -102,6 +59,27 @@
 		},
 		methods: {
 			getUserInfo(){
+				axios.post('https://cyonline.makeabetterworld.cn/api/getUserInfo',
+				qs.stringify(
+				{
+					UserId:'luhao',
+					token:'123456'
+				}
+				)
+				)
+				.then(function(res){
+					console.log(res);
+					if(res.data.code==='success'){
+						sessionStorage.setItem("Lv",res.data.data.Lv);
+						sessionStorage.setItem("avatarUrl",res.data.data.avatarUrl);
+						sessionStorage.setItem("NickName",res.data.data.NickName);
+						var urls=res.data.data.achievement.join('|');
+						sessionStorage.setItem("achievement",urls);
+					}
+				})
+				.catch(function(err){
+					console.log(err)
+				})
 				//获取用户信息
 				//储存在localstorage中，方便后面调用
 			}

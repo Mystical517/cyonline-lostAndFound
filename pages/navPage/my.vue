@@ -11,9 +11,9 @@
 					<view class="cu-item">
 						<view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
 						<view class="content flex-sub">
-							<view class="text-grey">正义天使 凯尔</view>
+							<view class="text-grey">{{username}}</view>
 							<view class="text-gray text-sm flex justify-between">
-								Lv0
+								Lv {{Lv}}
 							</view>
 						</view>
 					</view>
@@ -81,6 +81,9 @@
 	export default {
 		data() {
 		return {
+				username:'',
+				avatarURL:'',
+				Lv:'0',
 				scrollLeft: 0,
 				cardCur: 0,
 				swiperList: [{
@@ -117,7 +120,27 @@
 				direction: ''
 			}
 		},
+		created(){
+			this.init();
+		},
 		methods: {
+			init(){
+				this.username=sessionStorage.getItem('NickName');
+				this.avatarURL=sessionStorage.getItem('avatarURL');
+				this.Lv=sessionStorage.getItem('Lv');
+				var achievementList=sessionStorage.getItem('achievement').split('|');
+				console.log(achievementList);
+				this.swiperList=[];
+				for(let i in achievementList){
+					this.swiperList.push(
+					{
+						id: i,
+						type: 'image',
+						url: achievementList[i]
+					})
+				}
+				console.log(this.swiperList);
+				},
 			DotStyle(e) {
 					this.dotStyle = e.detail.value
 				},

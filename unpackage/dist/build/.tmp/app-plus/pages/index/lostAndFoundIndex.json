@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "index": "/pages/navPage/lostAndFoundHall",
+    "my": "/pages/navPage/my"
+  }
+}

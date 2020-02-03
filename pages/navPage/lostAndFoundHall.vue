@@ -58,56 +58,13 @@
 
 
 <script>
+	import axios from "axios";
+	import qs from 'qs';
+	
 	export default {
 		data() {
 		return {
-				dataOfLost:[
-						{
-							'id':0,
-							'pubId':0,
-							'title':'校园卡招领',
-							'imgSrc':'',
-							'text':'丢失了一张校园卡',
-							'keyWords':['天山堂','校园卡'],
-							'type':0
-						},
-						{
-							'id':1,
-							'pubId':0,
-							'title':'校园卡招领',
-							'imgSrc':'',
-							'text':'丢失了一张校园卡',
-							'keyWords':['昆仑堂','校园卡'],
-							'type':1
-						},
-						{
-							'id':2,
-							'pubId':0,
-							'title':'水杯招领',
-							'imgSrc':'',
-							'text':'捡到一个水杯',
-							'keyWords':['贺兰堂','水杯'],
-							'type':1
-						},
-						{
-							'id':3,
-							'pubId':0,
-							'title':'雨伞',
-							'imgSrc':'',
-							'text':'捡到一把雨伞',
-							'keyWords':['芝兰园','雨伞'],
-							'type':0
-						},
-						{
-							'id':4,
-							'pubId':0,
-							'title':'校园卡招领',
-							'imgSrc':'',
-							'text':'丢失了一张校园卡',
-							'keyWords':['玉树','校园卡'],
-							'type':1
-						}
-				],
+				dataOfLost:[],
 				TabCur: 0,
 				TabList:[
 					{'name':'全部','icon':'cuIcon-all'},
@@ -122,7 +79,33 @@
 				}
 			}
 		},
+		created() {
+			this.init();
+		},
 		methods: {
+			init(){
+				var that=this;
+				axios.post('https://cyonline.makeabetterworld.cn/api/selectLostAndFoundInfo',
+				qs.stringify(
+				{
+					UserId:'luhao',
+					token:'123456',
+					itemNum:'-1'
+				}
+				)
+				)
+				.then(function(res){
+					// console.log(this.dataOfLost);
+					console.log(res.data.data);
+					if(res.data.code==='success'){
+						that.dataOfLost=res.data.data;
+						console.log(that.dataOfLost);
+					}
+				})
+				.catch(function(err){
+					console.log(err)
+				})
+			},
 			start(e){
 			    this.startData.clientX=e.changedTouches[0].clientX;
 			    this.startData.clientY=e.changedTouches[0].clientY;
